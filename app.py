@@ -31,7 +31,7 @@ if user_input:
     with st.spinner("Pensando..."):
         prompt = build_prompt(system_instructions, user_input)
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=prompt,
             temperature=0.7
         )
