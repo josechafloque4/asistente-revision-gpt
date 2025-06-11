@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+import openai
 from dotenv import load_dotenv
 import os
 from modules import check_access, build_prompt
@@ -8,7 +8,7 @@ from utils import leer_archivo, validar_doi_crossref
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 st.set_page_config(page_title="Asistente de Revisión Sistemática", layout="wide")
 st.title("🔍 Asistente GPT para Revisiones Sistemáticas")
@@ -30,7 +30,7 @@ user_input = st.chat_input("Haz tu pregunta sobre tu revisión sistemática...")
 if user_input:
     with st.spinner("Pensando..."):
         prompt = build_prompt(system_instructions, user_input)
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=prompt,
             temperature=0.7
